@@ -48,3 +48,35 @@ for (var i = 0; i < spot.length; i++) {
 
 	}
 }
+// 拖放
+
+var card = document.querySelectorAll(".card .card_content");
+
+for(var i =0 ;i<card.length;i++){
+	card[i].ondragstart = function(ev){
+		ev.dataTransfer.setData("Text",ev.target.id);
+	}
+	card[i].ondrop = function(ev)
+	{
+		ev.preventDefault();
+		var data=ev.dataTransfer.getData("Text");
+		var data = document.getElementById(data);
+		var parent = ev.target.parentNode;
+		if(ev.target.classList.contains('card_content')){
+
+			parent.insertBefore(data,ev.target);
+			// console.log(ev.target);
+		
+		}else if(parent.classList.contains('card_content')){
+			// console.log(ev.target);
+			var pp = ev.target.parentNode;
+			parent = parent.parentNode;
+			parent.insertBefore(data,pp);
+		}else{
+			console.log("不能拖动");
+		}
+	}
+	card[i].ondragover = function(ev){
+		ev.preventDefault();
+	 }
+}
